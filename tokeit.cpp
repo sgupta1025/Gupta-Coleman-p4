@@ -9,19 +9,25 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <sys/types.h>
 using namespace std;
 
 
 
 int main(){
-     char  line[512];
-     char *argv[];
+  //char line[512];
+     string command;
+     cin >> command;
+     char *argv[10];
+     //char tmp = command.c_str();
      //get commmand line string
-     gets(line);
+     //gets(line);
+      char *str=const_cast< char *>(command.c_str());    
+
 
      //parse through string
      // Returns first token  
-     char *token = strtok(line, " "); 
+     char *token = strtok(str, " "); 
      
      // Keep printing tokens while one of the 
      // delimiters present in str[].
@@ -33,6 +39,7 @@ int main(){
 	 token = strtok(NULL, " ");
 	 num++;
        }
+     argv[num + 1] = NULL;
 
      //start fork
      int forkVal = fork();
@@ -43,11 +50,12 @@ int main(){
        exit(2);
      }//if
      else if(forkVal < 0){
-       perrror("fork");
+       perror("fork");
        exit(2);
      }//else if
      else{
-       waitpid(frokVal, NULL)
+       wait(NULL);
+       //waitpid(forkVal, NULL);
      }//else
      
 

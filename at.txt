@@ -1,1 +1,35 @@
-////////////////
+#include <signal.h>
+#include <iostream>
+#include <unistd.h>
+#include <sys/types.h>
+
+using namespace std;
+
+void sigHandler(int);
+
+int main() {
+  cout << "pid: " << getpid() << endl;
+  sleep(10);
+  cout << "waking up" << endl;
+
+  if(signal(SIGCHLD, sigHandler) == SIG_ERR) {
+    perror("error registering sigchild hanlder");
+    exit(1);
+  }
+
+  for(;;) {
+    cout << "waiting" << endl;
+    pause();
+    cout << "done one round" << endl;
+  }
+
+  return 0;
+}
+
+void sigHandler(int signo) {
+  if(signo == SIGCHLD) {
+    cout << "received sigchld!" << endl;
+  } else {
+    cout << "caught other signal: " << signo << endl;
+  }
+}
