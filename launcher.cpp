@@ -37,6 +37,7 @@ int main()
 	else
 	{
 		execlp(command.c_str(), command.c_str(), (char *) NULL);
+		perror("error exec\'ing");
 	}
 	return 0;
 }
