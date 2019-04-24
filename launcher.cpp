@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <cstring>
 using namespace std;
-
+//I done goofed, halp
 int main()
 {
 	string command;
