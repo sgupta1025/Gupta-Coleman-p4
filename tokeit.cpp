@@ -12,52 +12,46 @@
 #include <sys/types.h>
 using namespace std;
 
+int main()
+{
+	//char line[512];
+	string command;
+	getline(cin, command);
+	char* strArray[11];
+	char *token;
+	token = strtok(&command[0], " ");
+	int num = 0;
+	while (token != NULL)
+	{
+		//cout << token << endl;
+		strArray[num++] = token;
+		token = strtok(NULL, " ");
+	}
+	for(int i =0; i < 10; i++)
+	{
+		if(i >= num)
+		{
+			strArray[i] = NULL;
+		}
+	}
+	int forkVal = fork();
+	int status;
+	if(forkVal != 0)
+	{
+		cout << "done parsing" << endl;
+		cout << "num args: " << num << endl;
+		for(int i =0; i < num; i++)
+		{
+			cout << strArray[i] << endl;
+		}
+		wait(&status);
+	}
+	else
+	{
+		execvp(strArray[0], strArray);
+		perror("error exec\'ing");
+		return 1;
 
-
-int main(){
-  //char line[512];
-     string command;
-     cin >> command;
-     char *argv[10];
-     //char tmp = command.c_str();
-     //get commmand line string
-     //gets(line);
-      char *str=const_cast< char *>(command.c_str());    
-
-
-     //parse through string
-     // Returns first token  
-     char *token = strtok(str, " "); 
-     
-     // Keep printing tokens while one of the 
-     // delimiters present in str[].
-     int num = 0;
-     while (token != NULL) 
-       { 
-	 printf("%s\n", token);
-	 argv[num] = token;
-	 token = strtok(NULL, " ");
-	 num++;
-       }
-     argv[num + 1] = NULL;
-
-     //start fork
-     int forkVal = fork();
-
-     if(forkVal == 0){
-       execvp(argv[0], argv);
-       perror("execvp error");///shouldn't get here if execvp works
-       exit(2);
-     }//if
-     else if(forkVal < 0){
-       perror("fork");
-       exit(2);
-     }//else if
-     else{
-       wait(NULL);
-       //waitpid(forkVal, NULL);
-     }//else
-     
-
-     return 0;
-}//end
+	}
+	return 0;
+}
