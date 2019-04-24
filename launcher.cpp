@@ -23,15 +23,15 @@ int main()
 		if(WIFEXITED(status) == true)
 		{
 			cout << "termination by exit" << endl;
-			cout << "exit code:" << endl;
+			cout << "exit code:" <<WEXITSTATUS(status) << endl;
 
 
 		}
-		if(WIFSIGNALED(status) == true)
+	if(WIFSIGNALED(status) == true)
 		{
 			cout << "termination by signal" << endl;
 			cout << "signal: " << endl;
 		}
 	}
-
+	return 0;
 }
