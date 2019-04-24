@@ -30,6 +30,7 @@ int main()
 		if(WIFSIGNALED(status) == true)
 		{
 			cout << "termination by signal" << endl;
+			cout << "signal: " << endl;
 		}
 	}
 
