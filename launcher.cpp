@@ -9,16 +9,18 @@ int main()
 {
 	string command;
 	cin >> command;
-	if(fork() ==0)
+	int forkVal = fork();
+	if(forkVal == -1)
 	{
-		cout << "in child" << endl;
-		execlp(command.c_str(), command.c_str(), (char *) NULL);
+		perror("error fork");
+		return 1;
 	}
-	else
+	if(forkVal !=0)
 	{
+
 		int status;
-		int childID = wait(&status);
-		cout << "Waiting on child: " << childID << endl;
+		cout << "Waiting on child: " << forkVal << endl;
+		wait(&status);
 		if(WIFEXITED(status) == true)
 		{
 			cout << "termination by exit" << endl;
@@ -26,11 +28,15 @@ int main()
 
 
 		}
-	if(WIFSIGNALED(status) == true)
+		if(WIFSIGNALED(status) == true)
 		{
 			cout << "termination by signal" << endl;
-			cout << "signal: " << WTERMSIG(status) << "--" << strsignal(status) << endl;
+			cout << "signal: " << WTERMSIG(status) << " -- " << strsignal(WTERMSIG(status)) << endl;
 		}
+	}
+	else
+	{
+		execlp(command.c_str(), command.c_str(), (char *) NULL);
 	}
 	return 0;
 }
