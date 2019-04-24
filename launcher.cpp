@@ -1,9 +1,8 @@
 #include <iostream>
-#include <string>
+#include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <cstring>
-
 using namespace std;
 
 int main()
@@ -30,7 +29,7 @@ int main()
 	if(WIFSIGNALED(status) == true)
 		{
 			cout << "termination by signal" << endl;
-			cout << "signal: " << endl;
+			cout << "signal: " << WTERMSIG(status) << "--" << strsignal(status) << endl;
 		}
 	}
 	return 0;
