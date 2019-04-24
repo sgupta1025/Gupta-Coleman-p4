@@ -23,6 +23,7 @@ int main()
 		if(WIFEXITED(status) == true)
 		{
 			cout << "termination by exit" << endl;
+			cout << "exit code:" << endl;
 
 
 		}
